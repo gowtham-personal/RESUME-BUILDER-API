@@ -3,7 +3,7 @@ orbs:
   node: circleci/node@1.1.6
   heroku: circleci/heroku@0.0.10
 jobs:
-  build-and-run:
+  build:
     executor:
       name: node/default
     steps:
@@ -11,14 +11,13 @@ jobs:
       - node/with-cache:
           steps:
             - run: npm install
-            - run: npm start
 workflows:
-  build-and-test:
+  build-and-deploy:
     jobs:
-      - build-and-run
+      - build
       - heroku/deploy-via-git:
           requires:
-            - build-and-run
+            - build
           filters:
             branches:
               only:
