@@ -2,7 +2,7 @@ const createError = require("http-errors");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const fs = require("fs");
-const PORT = 3000;
+const PORT = 5000;
 const logger = require("morgan");
 
 let app = express();
@@ -13,7 +13,7 @@ var usersRouter = require("./src/routes/users");
 // Simple logger
 app.use(
   logger("combined", {
-    stream: fs.createWriteStream("./express.log", { flags: "a" }),
+    stream: fs.createWriteStream("./express.log", { flags: "a" })
   })
 );
 
@@ -25,12 +25,12 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
@@ -40,7 +40,7 @@ app.use(function (err, req, res, next) {
   res.send("error");
 });
 
-app.listen(PORT, () =>
+app.listen(process.env.PORT || PORT, () =>
   console.log(`Express currently running on port ${PORT}`)
 );
 
